@@ -9,13 +9,16 @@ import java.util.Scanner;
 public class TicketBooking extends Home {
 	static int stime;
 	static int tickets;
+	static ArrayList<Tickets> printTicket = new ArrayList<>();
 
 	public static void book() throws SQLException {
+		
+		
 		System.out.println("Select Show Number :");
 		Scanner scan = new Scanner(System.in);
 		snumber = scan.nextInt();
 
-		String q1 = "SELECT * FROM screen1 WHERE ShowNumber = '" + snumber + "'";
+		String q1 = "SELECT * FROM screen1 WHERE `Show Number` = '" + snumber + "'";
 
 		ConnectionPage p = new ConnectionPage();
 		p.connect();
@@ -24,8 +27,9 @@ public class TicketBooking extends Home {
 		while (rs.next()) {
 			snumber = rs.getInt(1);
 			movieRun = rs.getString(2);
-			available = rs.getInt(4);
 			screentime = rs.getTime(3);
+			available = rs.getInt(4);
+			
 
 		}
 
@@ -41,8 +45,10 @@ public class TicketBooking extends Home {
 
 			available = available - tickets;
 			updateSeats();
-			ArrayList<Tickets> printTicket = new ArrayList<>();
-			printTicket.add(new Tickets(tickets,movieRun,screentime));
+			
+			
+			
+			
 			System.out.println("Booking Success.. Seats available : " + available);
 			if (!(available == 0)) {
 				System.out.println();
@@ -53,11 +59,12 @@ public class TicketBooking extends Home {
 
 					book();
 				} else {
-					System.out.println("Print Ticket");
-					System.out.println("----------------------");
+					Tickets.ticketInfo();
+					
 					for(Tickets t: printTicket) {
 						t.displayTicket();
 					}
+					Tickets.printTicket();
 
 					System.exit(0);
 
@@ -74,7 +81,8 @@ public class TicketBooking extends Home {
 
 
 	public static void updateSeats() throws SQLException {
-		String q2 = "UPDATE screen1 SET seats = '" + available + "' WHERE ShowNumber = " + snumber;
+		printTicket.add(new Tickets(snumber,movieRun,tickets,screentime));
+		String q2 = "UPDATE screen1 SET seats = '" + available + "' WHERE `Show Number` = " + snumber;
 		ConnectionPage s = new ConnectionPage();
 		s.connect();
 		Statement sst = s.conn.createStatement();
