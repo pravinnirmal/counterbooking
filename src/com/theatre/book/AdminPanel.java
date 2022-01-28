@@ -38,7 +38,8 @@ scan.close();
 		System.out.println("3. Change Movie Name");
 		System.out.println("4. Change Show Timing");
 		System.out.println("5. Cancel Show");
-		System.out.println();
+		System.out.println("6. Booking Menu");
+		System.out.println("7. Home");
 		System.out.println("Enter Option:");
 		System.out.println();
 
@@ -64,6 +65,12 @@ scan.close();
 			break;
 		case 5:
 			cancelShow();
+			break;
+		case 6:
+			Home.homePage();
+			break;
+		case 7:
+			Home.main(null);
 			break;
 		default:
 			System.out.println("Enter Proper Option:");
@@ -114,8 +121,24 @@ scan.close();
 
 	
 	private static void changeTime() throws SQLException {
-		System.out.println("WIP");
+		
+		ConnectionPage p = new ConnectionPage();
+		p.connect();
+		
+		Scanner scan = new Scanner (System.in);
+		System.out.println("Enter Show number: ");
+		int sNumber = scan.nextInt();
+		System.out.println("Enter Updated Time (HHMM): ");
+		int utime = scan.nextInt();
+		
+		
+		String q2 = "UPDATE screen1 SET ShowTime = '" + utime+"00" + "' WHERE `Show Number` = " + sNumber;
+		Statement sst = p.conn.createStatement();
+
+		sst.execute(q2);
+		System.out.println("Show time Updated.");
 		adminMenu();
+		scan.close();
 
 	}
 

@@ -1,10 +1,13 @@
 package com.theatre.book;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.Scanner;
+
+
 
 public class Home {
 	static int available;
@@ -26,6 +29,7 @@ public class Home {
 		}
 		else {
 			System.out.println("Enter correct option. Try Again..");
+			Home.main(args);
 		}
 	}
 	
