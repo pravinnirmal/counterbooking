@@ -44,7 +44,7 @@ public class Tickets  {
 	}
 	void displayTicket() {
 		SimpleDateFormat Formatter1 = new SimpleDateFormat("HH:mm:ss");
-		System.out.format("\n %-8s  %-15s %-8s  %15s \n",snumber,movieRun, tickets, Formatter1.format(screentime));
+		System.out.format("\n %-8s  %-15s %-9s  %11s \n",snumber,movieRun, tickets, Formatter1.format(screentime));
 		System.out.println();
 		
 		
