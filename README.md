@@ -1,7 +1,7 @@
 # counterbooking
 Similar to Theatre counter booking
 
-Trying to create a cinema theatre ticlet booking project with basic functionalities.
+Trying to create a cinema theatre ticket booking project with basic functionalities.
 
 Plans: 
 
