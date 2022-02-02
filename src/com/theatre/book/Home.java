@@ -1,6 +1,6 @@
 package com.theatre.book;
 
-import java.io.IOException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,6 +30,7 @@ public class Home {
 		else {
 			System.out.println("Enter correct option. Try Again..");
 			Home.main(args);
+			scan.close();
 		}
 	}
 	
@@ -55,5 +56,5 @@ public class Home {
 		}
 
 		TicketBooking.book();
-}
+	}
 }

@@ -5,33 +5,40 @@ import java.sql.*;
 
 public class AdminPanel {
 	static Scanner scan = new Scanner(System.in);
+	static ConnectionPage p = new ConnectionPage();
 
 	static void admin() throws SQLException {
-		
+		p.connect();
+
 		System.out.println("Enter Admin Id");
 
 		String adminid = scan.next();
-//		System.out.println("Enter Password");
-//		String pwd = scan.next();
-		String q = "SELECT * FROM admin WHERE AdminID = '" + adminid + "'";
-
-		ConnectionPage p = new ConnectionPage();
-		p.connect();
-		Statement stt = p.conn.createStatement();
-		ResultSet rs = stt.executeQuery(q);
+		System.out.println("Enter Password");
+		String pwd = scan.next();
+		
+		String q = "SELECT * FROM admin WHERE BINARY AdminID =? and BINARY AdminPwd =?";
+		PreparedStatement pst = p.conn.prepareStatement(q);
+		pst.setString(1, adminid);
+		pst.setString(2, pwd);
+		ResultSet rs = pst.executeQuery();   	
 
 		if (rs.next()) {
-			System.out.println("Welcome Admin");
+			String Name = rs.getString(3);
+			System.out.println();
+			System.out.println("Welcome " + Name);
 			adminMenu();
 
 		} else {
-			System.out.println("Error. Not an Admin account.");
+			System.out.println("Error. Not an Admin account. Try Again");
+			System.out.println();
+			admin();
 		}
-scan.close();
+		scan.close();
 	}
-	
+
 	private static void adminMenu() throws SQLException {
 		
+		System.out.println();
 		System.out.println("--------------------");
 		System.out.println("1. Reset All Shows");
 		System.out.println("2. Reset Particular Show");
@@ -47,7 +54,7 @@ scan.close();
 	}
 
 	private static void switchM() throws SQLException {
-		
+
 		int option = scan.nextInt();
 
 		switch (option) {
@@ -81,10 +88,8 @@ scan.close();
 		scan.close();
 	}
 
-	
 	private static void reset() throws SQLException {
-		
-		ConnectionPage p = new ConnectionPage();
+
 		p.connect();
 		System.out.println("Enter Show Number To Reset :");
 		int sNumber = scan.nextInt();
@@ -92,21 +97,20 @@ scan.close();
 		Statement sst = p.conn.createStatement();
 
 		sst.execute(q2);
-		System.out.println("Show " + sNumber+ " reset done.");
+		System.out.println("Show " + sNumber + " reset done.");
 		System.out.println();
 		adminMenu();
 		scan.close();
-		
+
 	}
 
 	private static void cancelShow() throws SQLException {
-		
-		ConnectionPage p = new ConnectionPage();
+
 		p.connect();
-		
+
 		System.out.println("Enter Show Number");
 		int sNumber = scan.nextInt();
-		
+
 		String q2 = "UPDATE screen1 SET MovieName = 'Show Cancelled' WHERE `Show Number` = " + sNumber;
 		String q3 = "UPDATE screen1 SET seats = 0 WHERE `Show Number` = " + sNumber;
 		Statement sst = p.conn.createStatement();
@@ -119,20 +123,17 @@ scan.close();
 		scan.close();
 	}
 
-	
 	private static void changeTime() throws SQLException {
-		
-		ConnectionPage p = new ConnectionPage();
+
 		p.connect();
-		
-		Scanner scan = new Scanner (System.in);
+
+		Scanner scan = new Scanner(System.in);
 		System.out.println("Enter Show number: ");
 		int sNumber = scan.nextInt();
 		System.out.println("Enter Updated Time (HHMM): ");
 		int utime = scan.nextInt();
-		
-		
-		String q2 = "UPDATE screen1 SET ShowTime = '" + utime+"00" + "' WHERE `Show Number` = " + sNumber;
+
+		String q2 = "UPDATE screen1 SET ShowTime = '" + utime + "00" + "' WHERE `Show Number` = " + sNumber;
 		Statement sst = p.conn.createStatement();
 
 		sst.execute(q2);
@@ -142,19 +143,17 @@ scan.close();
 
 	}
 
-	
 	private static void changeMovie() throws SQLException {
-				
-		ConnectionPage p = new ConnectionPage();
+
 		p.connect();
-		
+
 		System.out.println("Enter Show Number:");
 		int sNumber = scan.nextInt();
 		System.out.println("Enter New Movie Name: ");
 		String updatedMovie;
-		updatedMovie= scan.nextLine();
-		updatedMovie+=scan.nextLine();
-		
+		updatedMovie = scan.nextLine();
+		updatedMovie += scan.nextLine();
+
 		String q2 = "UPDATE screen1 SET MovieName = '" + updatedMovie + "' WHERE `Show Number` = " + sNumber;
 		Statement sst = p.conn.createStatement();
 
@@ -166,10 +165,8 @@ scan.close();
 
 	}
 
-	
 	private static void resetAll() throws SQLException {
-		
-		ConnectionPage p = new ConnectionPage();
+
 		p.connect();
 		String q2 = "UPDATE screen1 SET seats = 50";
 		Statement sst = p.conn.createStatement();
