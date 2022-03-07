@@ -7,7 +7,7 @@ Plans:
 
 ~~-to add correct admin acccount login functionalities.~~ Fix : 02/02/22
 
-~~-to implement particular seat booking.~~
+~~-to implement particular seat booking.~~ Fix : 07/03/2022
 
 -to able to book particular date.
 
