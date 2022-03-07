@@ -65,3 +65,17 @@ public class Home {
 	}
 
 }
+
+
+/*
+ * Known issues: 
+ * Print information ticket details unavailable
+ * Cannot validate the values entered during ticket booking
+ * 
+ * Fix:
+ * Can book separate seats and update the same in database
+ * 
+ * ToDO:
+ * Admin panel separate ticket booking update and reset changes 
+ * few corrections from previous booking model to current model(single booking type vs seperate booking type)
+ */
